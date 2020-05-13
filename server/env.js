@@ -29,5 +29,5 @@ process.env.DIR_CACHE = path.join(process.cwd(), "cache");
 /**
  * The port this app listens on
  */
-process.env.SERVER_PORT = 8080;
+process.env.SERVER_PORT = process.env.SERVER_PORT || 8080;
 process.env.SERVER_URL = `http://localhost:${process.env.SERVER_PORT}/`;

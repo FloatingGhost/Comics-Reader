@@ -1,8 +1,13 @@
 const auth = require("basic-auth");
 const bcrypt = require("bcrypt");
 const jwt = require("jwt-simple");
+const PleromaAuthModule = require('express-pleroma-authenticator');
 
 const { getUserByName } = require("./db.js");
+const auth = new PleromaAuthModule(
+    'https://ihatebeinga.live',
+    { redirectUris: `http://localhost:${port}/callback` }
+);
 
 async function findUser(payload) {
   const user = getUserByName(payload.username);
@@ -80,6 +85,12 @@ class BasicAuth {
   }
 }
 
+class PleromaAuth {
+  async authenticate(req, res) {
+    await pleromaAuth.login(req, res);
+  }
+}
+
 const authMode = process.env.AUTH_MODE;
 
-module.exports = authMode === "db" ? new DBAuth() : new BasicAuth();
+module.exports = new PleromaAuth();
