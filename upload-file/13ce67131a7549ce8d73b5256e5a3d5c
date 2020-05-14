@@ -1,0 +1,12 @@
+# frozen-string-literal: true
+
+gemspec
+
+source 'http://rubygems.org' do
+  gem 'aws-sdk', '~>2'
+  gem 'cucumber'
+  gem 'process-helper'
+  gem 'rake', '~> 12.0'
+  gem 'rspec', '~> 3.0'
+  gem 'rspec-expectations'
+end
