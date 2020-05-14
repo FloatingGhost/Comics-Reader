@@ -82,7 +82,7 @@ export default function withAuth(WrappedComponent) {
     const authMode = await getAuthMode();
 
     let token = null;
-    if (authMode === "db") {
+    if (["db", "pleroma"].includes(authMode)) {
       const cookies = nextCookie(ctx);
       token = cookies[COOKIE_NAME];
 

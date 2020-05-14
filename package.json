@@ -51,7 +51,8 @@
     "@types/compression": "^1.0.0",
     "@types/express": "^4.16.0",
     "@types/morgan": "^1.7.35",
-    "@types/sharp": "^0.25.0"
+    "@types/sharp": "^0.25.0",
+    "nodemon": "^2.0.3"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^9.1.4",
@@ -70,7 +71,7 @@
     "debug": "^4.1.0",
     "execa": "4.0.1",
     "express": "^4.16.3",
-    "express-pleroma-authenticator": "^1.0.1",
+    "express-pleroma-authenticator": "^1.0.4",
     "iconv": "^3.0.0",
     "image-size": "^0.8.1",
     "isomorphic-unfetch": "^3.0.0",

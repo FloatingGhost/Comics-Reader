@@ -4,9 +4,9 @@ const jwt = require("jwt-simple");
 const PleromaAuthModule = require('express-pleroma-authenticator');
 
 const { getUserByName } = require("./db.js");
-const auth = new PleromaAuthModule(
+const pleromaAuth = new PleromaAuthModule(
     'https://ihatebeinga.live',
-    { redirectUris: `http://localhost:${port}/callback` }
+    { redirectUris: `${process.env.EXTERNAL_URL}/api/oauth-callback` }
 );
 
 async function findUser(payload) {
@@ -75,7 +75,7 @@ class DBAuth {
 class BasicAuth {
   async authenticate(req, res) {
     // Basic auth is checked by Apache / Nginx, here we only use the username
-
+    
     const authentication = auth(req);
     return authentication ? authentication.name : "anonymous";
   }
@@ -87,10 +87,23 @@ class BasicAuth {
 
 class PleromaAuth {
   async authenticate(req, res) {
-    await pleromaAuth.login(req, res);
+    if ("authorization" in req.headers) {
+        const iam = await pleromaAuth.checkCredentials(req.headers.authorization);
+        return iam.acct;      
+    } else {
+        return await pleromaAuth.login(req, res);
+    }
+  }
+
+  async getToken(code) {
+    return await pleromaAuth.oauthCallback(code)
   }
 }
 
 const authMode = process.env.AUTH_MODE;
-
-module.exports = new PleromaAuth();
+const auths = {
+    "db": new DBAuth(),
+    "basic": new BasicAuth(),
+    "pleroma": new PleromaAuth()
+}
+module.exports = auths[authMode];
