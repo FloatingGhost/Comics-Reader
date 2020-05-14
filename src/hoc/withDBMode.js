@@ -11,10 +11,7 @@ export default function withDBMode(WrappedComponent) {
   Component.getInitialProps = async ctx => {
     const authMode = await getAuthMode();
     // Can only use this page in DB Mode
-    if (authMode === "pleroma") {
-      redirect(ctx.res, "/api/pleroma")
-    }
-    if (authMode !== "db") {
+    if (!["db", "pleroma"].includes(authMode)) {
       redirect(ctx.res, "/");
       return {};
     }

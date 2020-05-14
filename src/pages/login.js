@@ -54,30 +54,9 @@ function Login() {
 
   return (
     <Layout current={{ name: "Login" }}>
-      <Form onSubmit={handleSubmit}>
-        {errorMessage && <Message>{errorMessage}</Message>}
-
-        {loading && <Loading />}
-
-        <label className="Label">
-          Username
-          <input className="Input" name="username" {...usernameField.bind} />
-        </label>
-
-        <label className="Label">
-          Password
-          <input
-            className="Input"
-            name="password"
-            type="password"
-            {...passwordField.bind}
-          />
-        </label>
-
-        <div style={{ textAlign: "right" }}>
-          <button className="Button Button--big">Submit</button>
-        </div>
-      </Form>
+      <form action="/api/pleroma">
+          <button type="submit" className="Button Button--big">Login with pleroma</button>
+      </form>
     </Layout>
   );
 }
