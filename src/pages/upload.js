@@ -20,7 +20,7 @@ class UploadForm extends React.Component {
     componentDidMount() {
         this.uppy = Uppy({})
             .use(Form, {target: this.form})
-            .use(Tus, { endpoint: `/upload-file`, withCredentials: true, chunkSize:  10 * 1024 * 1024});
+            .use(Tus, { endpoint: `/upload-file`, withCredentials: true, chunkSize:  10 * 1024 });
         this.uppy.on('upload', () => {
             console.log(this.state);
             if (this.state.workName.length < 3) {
