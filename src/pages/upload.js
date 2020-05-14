@@ -20,7 +20,14 @@ class UploadForm extends React.Component {
     componentDidMount() {
         this.uppy = Uppy({})
             .use(Form, {target: this.form})
-            .use(Tus, { endpoint: `/upload-file`, withCredentials: true });
+            .use(Tus, { endpoint: `/upload-file`, withCredentials: true, chunkSize:  10 * 1024 * 1024});
+        this.uppy.on('upload', () => {
+            console.log(this.state);
+            if (this.state.workName.length < 3) {
+                alert('Please give a comic name!');
+                throw "No"
+            }
+        });
         this.setState({loaded: true});
     }
 
@@ -31,12 +38,14 @@ class UploadForm extends React.Component {
                 <label htmlFor='workName'>Comic Name:</label>
                 <input name='workName' value={this.state.workName}
                     onChange={(e) => this.setState({workName: e.target.value})}
+                    required
                 />
             </form>            
             { this.uppy && 
             <Dashboard
                 uppy={this.uppy}
                 theme='dark'
+                proudlyDisplayPoweredByUppy={false}
                 locale={{
                   strings: {
                     dropHereOr: 'Drop here or %{browse}',
